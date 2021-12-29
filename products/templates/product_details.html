@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="product_details">
+        <div class="product_details__inner">
+            <div class="product_details__img">
+                <img class="product_details_img" src="{{ product_detail.image.url }}" />
+            </div>
+            <div class="product_details__description">
+                <div class="product_details_name">
+                    {{ product_detail.name }}
+                </div>
+                <div class="product_details_price">
+                    Price - $ {{ product_detail.price }}
+                </div>
+                <div class="product_details_description">
+                    {{ product_detail.description }}
+                </div>
+                <form action="{% url 'add_like' product_detail.id %}" method="post">
+                    {% csrf_token %}
+                    <i class="far fa-heart"> {{ product_detail.likes.count }}</i>
+                    <button class="product_details__btn" type="submit">Like</button>
+                </form>
+            </div>
+        </div>
+        <div class="product_details_comment">
+            {% for comment in product_detail.comment_set.all %}
+            <div class="comment__inner">
+                <div class="comment_details">
+                    {% if comment.user != none %}
+                        <div class="comment_user">{{ comment.user }}</div>
+                    {% else %}
+                        <div class="comment_user">Anonymous</div>
+                    {% endif %}
+
+                    <div class="comment_date">{{ comment.post_date }}</div>
+                </div>
+                <div class="comment_text">{{ comment.text }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="comment__form">
+            <form action="{% url 'add_comment' product_detail.id %}" method="post">
+                {% csrf_token %}
+                <div class="label">
+                    <label>Leave a comment</label>
+                </div>
+                <textarea class="comment_textarea" name="text"></textarea>
+                <div class="comment__btn">
+                    <button class="comment_submit_btn" type="submit">
+                        Send
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="comment__form">
+            <form action="{% url 'add_to_cart' product_detail.id %}" method="post">
+                {% csrf_token %}
+                <div class="label">
+                    <label>Amount of products</label>
+                </div>
+                <input name="amount"/>
+                <div class="comment__btn">
+                    <button class="comment_submit_btn" type="submit">
+                        Add to Cart
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    {% include 'new_arrivals.html' %}
+
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for cart in shop_cart %}
+        <div>
+            {{ cart.product }}
+        </div>
+        {% include 'index.html' %}
+    {% endfor %}
+{% endblock content %}

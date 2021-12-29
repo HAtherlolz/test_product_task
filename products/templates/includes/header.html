@@ -1,0 +1,27 @@
+<div class="header">
+        <div class="navbar-header">
+            <div class="logo">
+                <p>Test</p>
+            </div>
+        <ul class="navbar">
+            <a class="navbar__link" href="#">Home</a>
+            {% if shop_cart.exists %}
+             <a class="navbar__link" href="{% url 'shop_cart'%}">
+                <i class="fas fa-shopping-cart">{{shop_cart.count}}</i>
+            </a>
+            {% else %}
+            <a class="navbar__link" href="">
+                <i class="fas fa-shopping-cart"></i>
+            </a>
+            {% endif %}
+          {% if request.user.is_authenticated %}
+            <a class="navbar__link" href="">Orders</a>
+            <a class="navbar__link" href="#">{{ request.user.username }}, logout</a>
+            {% else %}
+            <a class="navbar__link" href="#">Login</a>
+          {% endif %}
+
+        </ul>
+        </div>
+      </div>
+

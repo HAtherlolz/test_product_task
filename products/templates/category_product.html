@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="comment__form">
+        <form action="{% url 'price_range_filter' %}" method="post">
+                {% csrf_token %}
+                <div class="label">
+                    <label>Min</label>
+                </div>
+                <input type="number" name="min_price" min="0" step="1"/>
+                <div class="label">
+                    <label>Max</label>
+                </div>
+                <input type="number" name="max_price" min="0" step="1"/>
+                <div class="comment__btn">
+                    <button class="comment_submit_btn" type="submit">
+                        Filter
+                    </button>
+                </div>
+        </form>
+    </div>
+    <div class="category__inner">
+        {% for product in product_list %}
+        <div class="product__item">
+            <div class="product_image">
+                <img class="product_img" src="{{ product.image.url }}" />
+            </div>
+            <div class="product__inner">
+                <div class="product__inner_name">
+                    <a class="product__name" href="{% url 'product_detail' product.slug%}">
+                        {{product.name}}
+                    </a>
+                </div>
+
+                <div class="product__low_description">
+                    <div class="product__price">${{product.price}}</div>
+                    <div class="product__likes"><i class="far fa-heart"> {{product.likes.count}}</i></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <a href="{% url 'products_to_csv' %}">Create csv file</a>
+    </div>
+
+    {% include 'new_arrivals.html' %}
+
+{% endblock content %}

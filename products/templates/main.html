@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="category">
+        {% for category in category_list %}
+            <a class="category__btn" href="{% url 'product_list' category.slug %}">{{category.name}} {{category.products.count}}</a>
+        {% endfor %}
+    </div>
+
+
+    <div class="popular">
+        <h1>POPULAR ITEMS</h1>
+        <div class="popular__inner">
+            {% for popular in popular_list %}
+                <div class="product__item">
+                <div class="product_image">
+                    <img class="product_img" src="{{ popular.image.url }}" />
+                </div>
+                <div class="product__inner">
+                    <div class="product__inner_name">
+                        <a class="product__name" href="{% url 'product_detail' popular.slug%}">
+                            {{popular.name}}
+                        </a>
+                    </div>
+
+                    <div class="product__low_description">
+                        <div class="product__price">${{popular.price}}</div>
+                        <div class="product__likes"><i class="far fa-heart"> {{popular.likes.count}}</i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% include 'new_arrivals.html' %}
+
+{% endblock content %}

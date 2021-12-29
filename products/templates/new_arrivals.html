@@ -1,0 +1,26 @@
+{% block new_arrivals %}
+<div class="popular">
+        <h1>NEW ARRIVALS</h1>
+        <div class="popular__inner">
+            {% for product in new_arrivals %}
+                <div class="product__item">
+                <div class="product_image">
+                    <img class="product_img" src="{{ product.image.url }}" />
+                </div>
+                <div class="product__inner">
+                    <div class="product__inner_name">
+                        <a class="product__name" href="{% url 'product_detail' product.slug%}">
+                            {{product.name}}
+                        </a>
+                    </div>
+
+                    <div class="product__low_description">
+                        <div class="product__price">${{product.price}}</div>
+                        <div class="product__likes"><i class="far fa-heart"> {{product.likes.count}}</i></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock new_arrivals %}
